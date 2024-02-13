@@ -18,7 +18,9 @@ export type GalleryProps = {
   users: User[];
 };
 const Gallery = ({ users }: GalleryProps) => {
-  const [usersList, setUsersList] = useState(users);
+  const [usersList, setUsersList] = useState(
+    users.sort((a, b) => (a.name > b.name ? 1 : -1))
+  );
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,7 +42,7 @@ const Gallery = ({ users }: GalleryProps) => {
     <div className="user-gallery">
       <div className="heading">
         <h1 className="title">Users</h1>
-        <Controls />
+        <Controls onChangeSort={setUsersList} />
       </div>
       <div className="items">
         {usersList.map((user, index) => (
